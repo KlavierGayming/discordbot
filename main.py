@@ -14,7 +14,11 @@ import json
 
 intents = discord.Intents.all()
 
-bot = commands.Bot(command_prefix="Joe, ", case_insensitive=True, intents=intents, description="Joe mama.")
+tokenjson = {}
+with open("token.json") as token:
+    tokenjson = json.loads(token.read())
+
+bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="Joe mama.")
 
 @bot.event
 async def on_ready():
@@ -172,9 +176,7 @@ async def say(ctx, text):
 #sessioning bullshit!!
 server_sessions: Dict[int, ServerSession] = {} 
 
-tokenjson = {}
-with open("token.json") as token:
-    tokenjson = json.loads(token.read())
+
 
 token = tokenjson["token"]
 
