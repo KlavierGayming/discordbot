@@ -66,16 +66,3 @@ class YTDLSource(discord.PCMVolumeTransformer):
             if searchquery.startswith("https://www.youtube.com/watch?v="):
                 video["webpage_url"] = searchquery
         return video
-    @classmethod
-    async def geturl(cls, searchquery) -> List:
-        with YoutubeDL(ytdl_format_options) as ydl:
-            try:
-                video = ydl.extract_info(searchquery, download=False)
-            except:
-                video = ydl.extract_info(f"ytsearch:{searchquery}", download=False)['entries'][0]
-            else:
-                video = ydl.extract_info(f"ytsearch:{searchquery}", download=False)['entries'][0]
-            
-            if searchquery.startswith("https://www.youtube.com/watch?v="):
-                video["webpage_url"] = searchquery
-        return video["webpage_url"]

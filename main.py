@@ -77,11 +77,8 @@ async def play(ctx, *, url):
 
 def weenus(ctx, e):
     func = asyncio.run_coroutine_threadsafe(server_sessions[ctx.guild.id].after_playing(ctx, e, bot), bot.loop)
-    try:
-        time.sleep(4)
-        func.result()
-    except Exception as e:
-        print(e)
+    time.sleep(4)
+    func.result()
 
 @bot.command()
 async def queue(ctx):
