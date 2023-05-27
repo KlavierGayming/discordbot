@@ -4,4 +4,9 @@ Idk what else to say here. It's like literally what i just told you.
 idk what else to put here actually
 spent like 3 days making this
 
-Also to run this, you will need `discord.py`, `ytdl-patched` and `ffmpeg`
+Also to run this, you will need `discord.py`, `ytdl-patched` and `ffmpeg` and you will need to create a `token.json` file with the contents being:
+`
+{ 
+    "token": "your bot token",
+    "prefix": "prefix"
+}`
