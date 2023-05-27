@@ -15,10 +15,11 @@ class Source:
         pass
 
 class ServerSession:
-    def __init__(self, guildid, vc):
+    def __init__(self, guildid, vc, bot):
         self.guildid: int = guildid
         self.vc: discord.VoiceClient = vc
         self.queue: List[Source] = []
+        self.bot = bot
     def display_queue(self) -> str:
         if self.queue:
             curqueue = []
@@ -33,8 +34,8 @@ class ServerSession:
         else:
             return "Queue is empty!"
     
-    async def add_to_queue(self, ctx, url, bot):
-        yt_source = await YTDLSource.play(url, loop=bot.loop, stream=True)
+    async def add_to_queue(self, ctx, url):
+        yt_source = await YTDLSource.play(url, loop=self.bot.loop, stream=True)
         self.queue.append(yt_source)
         if self.vc.is_playing():
             async with ctx.typing():
@@ -42,17 +43,20 @@ class ServerSession:
             pass
     async def after_playing(self, ctx, e, bot: commands.bot):
         error = e
-        if self.queue:
-            self.queue.pop(0)
-            await self.play_next(ctx, bot)
-    async def play_next(self, ctx, bot: commands.bot):
+        if error:
+            raise error
+        else:
+            if self.queue:
+                self.queue.pop(0)
+                await self.play_next(ctx)
+    async def play_next(self, ctx):
         if self.queue:
             async with ctx.typing():
-                player = await YTDLSource.play(self.queue[0].url, loop=bot.loop, stream=True)
-                self.vc.play(player, after=lambda e=None: self.weenus(ctx, e, bot))
+                player = await YTDLSource.play(self.queue[0].url, loop=self.bot.loop, stream=True)
+                self.vc.play(player, after=lambda e=None: self.weenus(ctx, e, self.bot))
             await ctx.send(f"**Now playing**: `{self.queue[0].title}`\n{self.queue[0].yturl}")
-    def weenus(self, ctx, e, bot: commands.bot):
-        func = asyncio.run_coroutine_threadsafe(self.after_playing(ctx, e, bot), bot.loop)
+    def weenus(self, ctx, e):
+        func = asyncio.run_coroutine_threadsafe(self.after_playing(ctx, e, self.bot), self.bot.loop)
         time.sleep(4)
         func.result()
 

@@ -56,7 +56,7 @@ class Music(commands.Cog):
 
                 await voice.channel.connect()
                 if ctx.voice_client.is_connected():
-                    self.server_sessions[ctx.guild.id] = ServerSession(ctx.guild.id, ctx.voice_client)
+                    self.server_sessions[ctx.guild.id] = ServerSession(ctx.guild.id, ctx.voice_client, self.bot)
                 else:
                     return await ctx.send("Failed to connect!")
         if ctx.guild.id in self.server_sessions and ctx.voice_client.channel != voice.channel:
@@ -64,11 +64,11 @@ class Music(commands.Cog):
         if ctx.voice_client.is_playing() != True and ctx.voice_client.is_paused() != True:
             async with ctx.typing():
                 player = await YTDLSource.play(url=url, loop=self.bot.loop, stream=True)
-                await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url, self.bot)
+                await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url)
                 ctx.voice_client.play(player, after=lambda e=None: self.weenus(ctx, e))
             await ctx.send("**Now playing:** `"+ str(player.title) + "`\n" + str(player.yturl))
         else:
-            await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url, self.bot)
+            await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url)
     
 
     @commands.command()
@@ -84,6 +84,7 @@ class Music(commands.Cog):
         """Stop player"""
         if ctx.voice_client.is_playing() == True and ctx.guild.id in self.server_sessions:
             ctx.voice_client.stop()
+            self.server_sessions[ctx.guild.id].queue = []
             await ctx.send("Stopped playing.")
         else:
             await ctx.send("You have to be playing to stop!")
@@ -146,8 +147,10 @@ class Music(commands.Cog):
     async def song(self, ctx):
         """Show the current song"""
         guild_id = ctx.guild.id
-        if guild_id in self.server_sessions:
+        if guild_id in self.server_sessions and len(self.server_sessions[guild_id].queue) >=1:
             await ctx.send(f'**Now playing:** `{self.server_sessions[guild_id].queue[0].title}`')
         else:
             await ctx.send("Not playing anything right now!")
     
+async def setup(bot: commands.bot):
+    await bot.add_cog(Music(bot))

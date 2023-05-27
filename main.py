@@ -11,9 +11,13 @@ from typing import Dict
 import time
 import asyncio
 import json
-import cogs.music as music
+from cogs import music
+import os
+import logging
+import nest_asyncio
 
 intents = discord.Intents.all()
+nest_asyncio.apply()
 
 tokenjson = {}
 with open("token.json") as token:
@@ -47,9 +51,12 @@ async def on_ready():
     print("Logged in as " + str(bot.user))
 
 token = tokenjson["token"]
-async def main():
-    async with bot:
-        await bot.add_cog(music.Music(bot))
-        await bot.add_cog(Basics(bot))
-        await bot.start(token)
-asyncio.run(main())
+async def load():
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            await bot.load_extension(f"cogs.{filename[:-3]}")
+async def fuckthisshit():
+    await load()
+    await bot.run(token, log_handler=logging.StreamHandler(), log_level=logging.DEBUG)
+
+asyncio.run(fuckthisshit())
