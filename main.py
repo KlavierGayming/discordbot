@@ -121,20 +121,6 @@ async def skip(ctx):
                 vc.stop()
 
 @bot.command()
-async def loop(ctx):
-    guildid = ctx.guild.id
-    if guildid in server_sessions:
-        session = server_sessions[guildid]
-        session.songloop = not session.songloop
-        define=""
-        if session.songloop:
-            define = "on"
-        elif session.songloop == False:
-            define = "off"
-        else:
-            define = "error"
-        await ctx.send(f"Loop of the current song has been succesfully turned {define}")
-@bot.command()
 async def remove(ctx, i: int):
     guildid = ctx.guild.id
     if guildid in server_sessions:

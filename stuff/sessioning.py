@@ -18,8 +18,6 @@ class ServerSession:
         self.guildid: int = guildid
         self.vc: discord.VoiceClient = vc
         self.queue: List[Source] = []
-        self.songloop = False
-
     def display_queue(self) -> str:
         if self.queue:
             curqueue = []
@@ -48,8 +46,7 @@ class ServerSession:
             raise error
         else:
             if self.queue:
-                if self.songloop == False:
-                    self.queue.pop(0)
+                self.queue.pop(0)
                 await self.play_next(ctx, bot)
     async def play_next(self, ctx, bot: commands.bot):
         if self.queue:
