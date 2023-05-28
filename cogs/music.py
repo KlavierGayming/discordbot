@@ -47,7 +47,7 @@ class Music(commands.Cog):
 
         
     @commands.command()
-    async def play(self, ctx, *, url):
+    async def play(self, ctx, *, query):
         """Play song (from YT URL or YT search query)"""
         voice = ctx.author.voice
         if ctx.voice_client == None:
@@ -63,12 +63,12 @@ class Music(commands.Cog):
             await ctx.voice_client.move_to(voice.channel)
         if ctx.voice_client.is_playing() != True and ctx.voice_client.is_paused() != True:
             async with ctx.typing():
-                player = await YTDLSource.play(url=url, loop=self.bot.loop, stream=True)
-                await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url)
+                player = await YTDLSource.play(url=query, loop=self.bot.loop, stream=True)
+                await self.server_sessions[ctx.guild.id].add_to_queue(ctx, query)
                 ctx.voice_client.play(player, after=lambda e=None: self.weenus(ctx, e))
             await ctx.send("**Now playing:** `"+ str(player.title) + "`\n" + str(player.yturl))
         else:
-            await self.server_sessions[ctx.guild.id].add_to_queue(ctx, url)
+            await self.server_sessions[ctx.guild.id].add_to_queue(ctx, query)
     
 
     @commands.command()

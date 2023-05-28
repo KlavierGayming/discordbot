@@ -53,7 +53,7 @@ class ServerSession:
         if self.queue:
             async with ctx.typing():
                 player = await YTDLSource.play(self.queue[0].url, loop=self.bot.loop, stream=True)
-                self.vc.play(player, after=lambda e=None: self.weenus(ctx, e, self.bot))
+                self.vc.play(player, after=lambda e=None: self.weenus(ctx, e))
             await ctx.send(f"**Now playing**: `{self.queue[0].title}`\n{self.queue[0].yturl}")
     def weenus(self, ctx, e):
         func = asyncio.run_coroutine_threadsafe(self.after_playing(ctx, e, self.bot), self.bot.loop)
