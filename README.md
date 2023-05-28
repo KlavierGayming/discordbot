@@ -9,7 +9,8 @@ To run this bot, you will need to create a `token.json` file with the contents b
 ```json
 { 
     "token": "your bot token",
-    "prefix": "prefix"
+    "prefix": "prefix",
+    "playing_status": "whatever the hell you want."
 }
 ```
 

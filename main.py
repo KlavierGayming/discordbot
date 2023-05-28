@@ -1,17 +1,16 @@
 #i have no idea what im doing.
 
 import discord
-from stuff.youtubestuff import YTDLSource
 from discord.ext import commands
 import json
-from yt_dlp import YoutubeDL as ytdl
-from stuff.sessioning import ServerSession
 from typing import Dict
 import asyncio
 import json
 import os
 import nest_asyncio
 import stuff.customHelp as ch
+import logging
+
 intents = discord.Intents.all()
 nest_asyncio.apply()
 
@@ -20,12 +19,22 @@ with open("token.json") as token:
     tokenjson = json.loads(token.read())
 
 bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="Joe mama.", help_command=ch.HelpCommand())
+bot.activity = discord.Game(name=tokenjson["playing_status"])
 
 
 
 @bot.event
 async def on_ready():
     print("Logged in as " + str(bot.user))
+
+#@bot.event
+#async def on_command_error(ctx, error):
+#    if isinstance(error, commands.MissingRequiredArgument):
+#        await ctx.send('Pass in all arguments, please.')
+#    elif isinstance(error, commands.MissingPermissions):
+#        await ctx.send("You're missing permissions to run this command.")
+#    else:
+#        print(error)
 
 token = tokenjson["token"]
 async def load():
