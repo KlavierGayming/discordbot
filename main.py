@@ -57,6 +57,7 @@ async def load():
             await bot.load_extension(f"cogs.{filename[:-3]}")
 async def fuckthisshit():
     await load()
-    await bot.run(token, log_handler=logging.StreamHandler(), log_level=logging.DEBUG)
+    #await bot.run(token, log_handler=logging.StreamHandler(), log_level=logging.DEBUG)
+    bot.run(token)
 
 asyncio.run(fuckthisshit())
