@@ -10,7 +10,8 @@ To run this bot, you will need to create a `token.json` file with the contents b
 { 
     "token": "your bot token",
     "prefix": "prefix"
-}```
+}
+```
 
 This bot uses cogs. They're automatically detected in the `cogs/` folder. If you want to add new functions, add a new `.py` file to the `cogs/` folder. The file must have an async def called setup which loads the cog.
 ex.
