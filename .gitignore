@@ -2,3 +2,4 @@ token.json
 /__pycache__/*
 /stuff/__pycache__/*
 /cogs/__pycache__/*
+.DS_Store
