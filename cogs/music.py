@@ -25,7 +25,7 @@ class Music(commands.Cog):
 
         await voice.channel.connect()
         if ctx.voice_client.is_connected():
-            self.server_sessions[ctx.guild.id] = ServerSession(ctx.guild.id, ctx.voice_client)
+            self.server_sessions[ctx.guild.id] = ServerSession(ctx.guild.id, ctx.voice_client, self.bot)
             return await ctx.send("Connected successfully")
         else:
             return await ctx.send("Failed to connect!")
