@@ -18,14 +18,14 @@ nest_asyncio.apply()
 tokenjson = {}
 with open("token.json") as token:
     tokenjson = json.loads(token.read())
-
-bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="Joe mama.", help_command=ch.HelpCommand())
+bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="Joe mama.", help_command=ch.HelpCommand(), tree_cls=app_commands.tree.CommandTree)
 bot.activity = discord.Game(name=tokenjson["playing_status"])
 
 
 
 @bot.event
 async def on_ready():
+    await bot.tree.sync()
     print("Logged in as " + str(bot.user))
 
 @bot.event

@@ -7,7 +7,7 @@ class Moderation(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member : discord.Member, *, reason=None):
         """Ban a user."""
@@ -17,7 +17,7 @@ class Moderation(commands.Cog):
         else:
             await ctx.author.send("Your role isn't high enough to ban this member!")
 
-    @commands.command()
+    @commands.hybrid_command()
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, * , reason):
         """Kick a user"""
@@ -27,7 +27,7 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("Your role isn't high enough to ban this member!")
     
-    @commands.command()
+    @commands.hybrid_command()
     @commands.has_permissions(ban_members = True)
     async def pardon(self, ctx,*, member: discord.User):
         """Unban a user."""
@@ -40,7 +40,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"Successfully unbanned **{member}**")
             await guild.unban(user=member)
         
-    @commands.command(usage="Joe, timeout <member> <duration in hours with h behind> <duration in minutes with m behind>", aliases=["mute"])
+    @commands.hybrid_command(usage="Joe, timeout <member> <duration in hours with h behind> <duration in minutes with m behind>", aliases=["mute"])
     @commands.has_permissions(kick_members=True)
     async def timeout(self, ctx, member:discord.Member, durationh, durationm):
         """Time out a user."""

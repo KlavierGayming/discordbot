@@ -7,7 +7,7 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command()
+    @commands.hybrid_command()
     async def quote(self, ctx):
         """Returns a random quote"""
         contents = ""

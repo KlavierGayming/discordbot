@@ -16,7 +16,7 @@ class Music(commands.Cog):
         #session bullshit
         self.server_sessions: Dict[int, ServerSession] = {} 
     
-    @commands.command()
+    @commands.hybrid_command()
     async def join(self, ctx):
         """Joins a voice channel"""
         voice = ctx.author.voice
@@ -30,7 +30,7 @@ class Music(commands.Cog):
         else:
             return await ctx.send("Failed to connect!")
     
-    @commands.command()
+    @commands.hybrid_command()
     async def leave(self, ctx):
         """Leave voice channel"""
         channel = ctx.voice_client
@@ -46,7 +46,7 @@ class Music(commands.Cog):
         func.result()
 
         
-    @commands.command()
+    @commands.hybrid_command()
     async def play(self, ctx, *, query):
         """Play song (from YT URL or YT search query)"""
         voice = ctx.author.voice
@@ -71,7 +71,7 @@ class Music(commands.Cog):
             await self.server_sessions[ctx.guild.id].add_to_queue(ctx, query)
     
 
-    @commands.command()
+    @commands.hybrid_command()
     async def queue(self, ctx):
         """Show current queue"""
         if ctx.guild.id in self.server_sessions:
@@ -79,7 +79,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("There is no queue to display!")
 
-    @commands.command()
+    @commands.hybrid_command()
     async def stop(self, ctx):
         """Stop player"""
         if ctx.voice_client.is_playing() == True and ctx.guild.id in self.server_sessions:
@@ -89,7 +89,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("You have to be playing to stop!")
 
-    @commands.command()
+    @commands.hybrid_command()
     async def pause(self, ctx):
         """Pause playing song"""
         if ctx.voice_client.is_playing() == True and ctx.voice_client.is_paused() == False and ctx.guild.id in self.server_sessions:
@@ -98,7 +98,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("You have to be playing/not paused!")
     
-    @commands.command()
+    @commands.hybrid_command()
     async def resume(self, ctx):
         """Resumes paused song"""
         if ctx.voice_client.is_playing() == False and ctx.voice_client.is_paused() == True and ctx.guild.id in self.server_sessions:
@@ -107,7 +107,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("You have to be paused/playing!")
 
-    @commands.command()
+    @commands.hybrid_command()
     async def skip(self, ctx):
         """Skip current song in queue"""
         guildid = ctx.guild.id
@@ -118,7 +118,7 @@ class Music(commands.Cog):
                 if len(session.queue) > 1:
                     vc.stop()
 
-    @commands.command()
+    @commands.hybrid_command()
     async def remove(self, ctx, i: int):
         """Remove Indexed Item from queue"""
         guildid = ctx.guild.id
@@ -132,7 +132,7 @@ class Music(commands.Cog):
                 self.server_sessions[guildid].queue.pop(i)
                 await ctx.send(f"Removed `{removedname}` from queue.")
 
-    @commands.command()
+    @commands.hybrid_command()
     async def clear(self, ctx):
         """Clear the queue"""
         guildid = ctx.guild.id
@@ -143,7 +143,7 @@ class Music(commands.Cog):
                 voice_client.stop()
             await ctx.send("Queue cleared and current song stopped.")
 
-    @commands.command()
+    @commands.hybrid_command()
     async def song(self, ctx):
         """Show the current song"""
         guild_id = ctx.guild.id
