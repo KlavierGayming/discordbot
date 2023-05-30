@@ -119,17 +119,17 @@ class Music(commands.Cog):
                     vc.stop()
 
     @commands.hybrid_command()
-    async def remove(self, ctx, i: int):
+    async def remove(self, ctx, numberInQueue: int):
         """Remove Indexed Item from queue"""
         guildid = ctx.guild.id
         if guildid in self.server_sessions:
-            if i==0:
+            if numberInQueue==0:
                 await ctx.send("Cannot remove current playing song, please use skip command instead.")
-            elif i >= len(self.server_sessions[guildid].queue):
+            elif numberInQueue >= len(self.server_sessions[guildid].queue):
                 await ctx.send(f"The queue is not that long, there are only {len(self.server_sessions[guildid].queue)-1} items.")
             else:
-                removedname= self.server_sessions[guildid].queue[i].title
-                self.server_sessions[guildid].queue.pop(i)
+                removedname= self.server_sessions[guildid].queue[numberInQueue].title
+                self.server_sessions[guildid].queue.pop(numberInQueue)
                 await ctx.send(f"Removed `{removedname}` from queue.")
 
     @commands.hybrid_command()
