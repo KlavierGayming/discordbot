@@ -10,6 +10,7 @@ import os
 import nest_asyncio
 import stuff.customHelp as ch
 import logging
+from discord import app_commands
 
 intents = discord.Intents.all()
 nest_asyncio.apply()
