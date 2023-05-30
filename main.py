@@ -27,14 +27,14 @@ bot.activity = discord.Game(name=tokenjson["playing_status"])
 async def on_ready():
     print("Logged in as " + str(bot.user))
 
-#@bot.event
-#async def on_command_error(ctx, error):
-#    if isinstance(error, commands.MissingRequiredArgument):
-#        await ctx.send('Pass in all arguments, please.')
-#    elif isinstance(error, commands.MissingPermissions):
-#        await ctx.send("You're missing permissions to run this command.")
-#    else:
-#        print(error)
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Pass in all arguments, please.')
+    elif isinstance(error, commands.MissingPermissions):
+        await ctx.send("You're missing permissions to run this command.")
+    else:
+        print(error)
 
 token = tokenjson["token"]
 async def load():
