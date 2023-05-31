@@ -68,9 +68,16 @@ class Music(commands.Cog):
                 ctx.voice_client.play(player, after=lambda e=None: self.weenus(ctx, e))
             await ctx.send("**Now playing:** `"+ str(player.title) + "`\n" + str(player.yturl))
         else:
-            await self.server_sessions[ctx.guild.id].add_to_queue(ctx, query)
+            async with ctx.typing():
+                await self.addtoqueue(ctx, query)
     
-
+    async def addtoqueue(self, ctx, query):
+        await self.server_sessions[ctx.guild.id].add_to_queue(ctx, query)
+        session = self.server_sessions[ctx.guild.id]
+        newinqueue = session.queue[len(session.queue)-1]
+        print("shiz")
+        if self.server_sessions[ctx.guild.id].vc.is_playing():    
+            await ctx.send(f"Added to queue: {newinqueue.title}\n{newinqueue.yturl}")
     @commands.hybrid_command()
     async def queue(self, ctx):
         """Show current queue"""
@@ -117,19 +124,20 @@ class Music(commands.Cog):
             if vc.is_playing():
                 if len(session.queue) > 1:
                     vc.stop()
+                    await ctx.send("Skipping!")
 
     @commands.hybrid_command()
-    async def remove(self, ctx, numberInQueue: int):
+    async def remove(self, ctx, numberinqueue: int):
         """Remove Indexed Item from queue"""
         guildid = ctx.guild.id
         if guildid in self.server_sessions:
-            if numberInQueue==0:
+            if numberinqueue==0:
                 await ctx.send("Cannot remove current playing song, please use skip command instead.")
-            elif numberInQueue >= len(self.server_sessions[guildid].queue):
+            elif numberinqueue >= len(self.server_sessions[guildid].queue):
                 await ctx.send(f"The queue is not that long, there are only {len(self.server_sessions[guildid].queue)-1} items.")
             else:
-                removedname= self.server_sessions[guildid].queue[numberInQueue].title
-                self.server_sessions[guildid].queue.pop(numberInQueue)
+                removedname= self.server_sessions[guildid].queue[numberinqueue].title
+                self.server_sessions[guildid].queue.pop(numberinqueue)
                 await ctx.send(f"Removed `{removedname}` from queue.")
 
     @commands.hybrid_command()

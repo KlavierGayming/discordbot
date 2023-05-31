@@ -37,10 +37,9 @@ class ServerSession:
     async def add_to_queue(self, ctx, url):
         yt_source = await YTDLSource.play(url, loop=self.bot.loop, stream=True)
         self.queue.append(yt_source)
-        if self.vc.is_playing():
-            async with ctx.typing():
-                await ctx.send(f'**Added to queue:** `{yt_source.title}`\n{yt_source.yturl}')
-            pass
+#        if self.vc.is_playing():
+#            async with ctx.typing():
+#               await ctx.interaction.send(f'**Added to queue:** `{yt_source.title}`\n{yt_source.yturl}')
     async def after_playing(self, ctx, e, bot: commands.bot):
         error = e
         if error:
@@ -51,10 +50,13 @@ class ServerSession:
                 await self.play_next(ctx)
     async def play_next(self, ctx):
         if self.queue:
-            async with ctx.typing():
-                player = await YTDLSource.play(self.queue[0].url, loop=self.bot.loop, stream=True)
-                self.vc.play(player, after=lambda e=None: self.weenus(ctx, e))
-            await ctx.send(f"**Now playing**: `{self.queue[0].title}`\n{self.queue[0].yturl}")
+            ctx.defer()
+            player = await YTDLSource.play(self.queue[0].url, loop=self.bot.loop, stream=True)
+            self.vc.play(player, after=lambda e=None: self.weenus(ctx, e))
+            if ctx.interaction:
+                await ctx.interaction.followup.send(f"**Now playing**: `{self.queue[0].title}`\n{self.queue[0].yturl}", wait=True)
+            else:
+                await ctx.send(f"**Now playing**: `{self.queue[0].title}`\n{self.queue[0].yturl}")
     def weenus(self, ctx, e):
         func = asyncio.run_coroutine_threadsafe(self.after_playing(ctx, e, self.bot), self.bot.loop)
         time.sleep(4)
