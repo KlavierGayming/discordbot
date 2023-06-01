@@ -1,26 +1,19 @@
-# DON'T BE A DICK PUBLIC LICENSE
+# Credit me and don't profit license
 
-> Version 1.1, December 2016
+> ver. 1.0, June 2023
 
-> Copyright (C) 2023 KlavierGayming
+> Copyright (C) 2023, KlavierGayming
 
-Everyone is permitted to copy and distribute verbatim or modified
-copies of this license document.
+1. This work is fully open source and the license holder, stated in the copyright notice above, provides you with full access to the source code with you being able to modify it in any way you want.
 
-> DON'T BE A DICK PUBLIC LICENSE
-> TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+2. You can use this product in any way you want, excluding purposes with malicious intents (ex. scamming).
 
-1. Do whatever you like with the original work, just don't be a dick.
+3. You have to open-source any project containing the original work of the license holder.
 
-   Being a dick includes - but is not limited to - the following instances:
+4. Redistributing terms are:
+    1a. You will credit the original creator, which is listed in the copyright notice above in your distribution.
+    1b. This work will not be used for profit under any circumstances (commercial, free with optional donation and any form of "profiting" all apply under this rule.).
+    1c. Don't just straight up clone the project, change the name and distribute it. (Falls under 1a, too probably.)
+    1d. Keep the same license under the redistributed project.
 
- 1a. Outright copyright infringement - Don't just copy this and change the name.
- 1b. Selling the unmodified original with no work done what-so-ever, that's REALLY being a dick.
- 1c. Modifying the original work to contain hidden harmful content. That would make you a PROPER dick.
-
-2. If you become rich through modifications, related works/services, or supporting the original work,
-share the love. Only a dick would make loads off this work and not buy the original work's
-creator(s) a pint.
-
-3. Code is provided with no warranty. Using somebody else's code and bitching when it goes wrong makes
-you a DONKEY dick. Fix the problem yourself. A non-dick would submit the fix back.
+5. This work is provided with no warranty whatsoever, if the original work is faulty/doesn't function as intended, fix it yourself.
