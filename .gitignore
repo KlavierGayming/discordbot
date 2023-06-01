@@ -3,3 +3,4 @@ token.json
 /stuff/__pycache__/*
 /cogs/__pycache__/*
 .DS_Store
+LICENSE hide this one i need to rethink it
