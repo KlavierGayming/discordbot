@@ -123,6 +123,8 @@ class Music(commands.Cog):
             vc = session.vc
             if vc.is_playing():
                 if len(session.queue) > 1:
+                    if session.songloop:
+                        session.queue.pop(0)
                     vc.stop()
                     await ctx.send("Skipping!")
 
@@ -150,6 +152,20 @@ class Music(commands.Cog):
             if voice_client.is_playing():
                 voice_client.stop()
             await ctx.send("Queue cleared and current song stopped.")
+
+    @commands.hybrid_command()
+    async def loop(self, ctx):
+        """Toggle looping the current song"""
+        guildid = ctx.guild.id
+        if guildid in self.server_sessions:
+            self.server_sessions[guildid].songloop = not self.server_sessions[guildid].songloop
+            songloop = self.server_sessions[guildid].songloop
+            loopstr = ""
+            if songloop: loopstr = "Looping"
+            else: loopstr = "Stopped looping"
+            await ctx.send(f"{loopstr} current song/next song that plays.")
+        else:
+            await ctx.send("I need to be connected to a VC to do that!")
 
     @commands.hybrid_command()
     async def song(self, ctx):

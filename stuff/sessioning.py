@@ -20,6 +20,7 @@ class ServerSession:
         self.vc: discord.VoiceClient = vc
         self.queue: List[Source] = []
         self.bot = bot
+        self.songloop = False
     def display_queue(self) -> str:
         if self.queue:
             curqueue = []
@@ -46,11 +47,11 @@ class ServerSession:
             raise error
         else:
             if self.queue:
-                self.queue.pop(0)
+                if not self.songloop:
+                    self.queue.pop(0)
                 await self.play_next(ctx)
     async def play_next(self, ctx):
         if self.queue:
-            ctx.defer()
             player = await YTDLSource.play(self.queue[0].url, loop=self.bot.loop, stream=True)
             self.vc.play(player, after=lambda e=None: self.weenus(ctx, e))
             if ctx.interaction:

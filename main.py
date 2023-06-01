@@ -25,8 +25,13 @@ bot.activity = discord.Game(name=tokenjson["playing_status"])
 
 @bot.event
 async def on_ready():
-    await bot.tree.sync()
     print("Logged in as " + str(bot.user))
+    try: 
+        await bot.tree.sync()
+        print("Synced")
+    except Exception as e:
+        print(e)
+
 
 @bot.event
 async def on_command_error(ctx, error):
