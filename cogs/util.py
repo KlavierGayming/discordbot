@@ -23,3 +23,6 @@ class Util(commands.Cog):
         else:
             actualStuff = "Couldn't find " + name + " in link database!"
         await ctx.send(actualStuff)
+
+async def setup(bot):
+    await bot.add_cog(Util(bot))
