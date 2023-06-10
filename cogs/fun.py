@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import random
+from typing import Dict
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -17,7 +18,6 @@ class Fun(commands.Cog):
         currEntry = random.randint(0, len(data))
         
         await ctx.send("`" + data[currEntry]["text"] + "`" + "\n\-  " + data[currEntry]["author"])
-
-
+    
 async def setup(bot):
     await bot.add_cog(Fun(bot))

@@ -1,4 +1,5 @@
 #i have no idea what im doing.
+#nvm i kinda do
 
 import discord
 from discord.ext import commands
@@ -33,7 +34,7 @@ async def on_ready():
         print(e)
 
 
-@bot.event
+#@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send('Pass in all arguments, please.')
