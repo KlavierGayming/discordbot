@@ -12,6 +12,7 @@ You will also need to create a `token.json` file with the contents being:<br>
     "playing_status": "whatever the hell you want."
 }
 ```
+You will also need to create a db.json file in /cogs. This stores link data and is private to the official release of the bot, though it is easy to add new links through discord. Keep the file empty, as i'm pretty sure it'll get written by itself.
 
 To add a new cog with new commands, add a new `.py` file to the `cogs/` folder. The file must have an async def called setup which loads the cog.<br>
 For example:
