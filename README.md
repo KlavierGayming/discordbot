@@ -9,7 +9,8 @@ You will also need to create a `token.json` file with the contents being:<br>
 { 
     "token": "your bot token",
     "prefix": "prefix",
-    "playing_status": "whatever the hell you want."
+    "playing_status": "whatever the hell you want.",
+    "bot_owner": 0011235566 // your discord user ID
 }
 ```
 You will also need to create a db.json file in /cogs. This stores link data and is private to the official release of the bot, though it is easy to add new links through discord. Keep the file empty, as i'm pretty sure it'll get written by itself.
