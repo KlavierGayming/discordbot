@@ -13,7 +13,7 @@ class Moderation(commands.Cog):
         """Ban a user."""
         if ctx.author.top_role > member.top_role:
             await member.ban(reason=reason)
-            await ctx.send("Successfully banned member" + member)
+            await ctx.send("Successfully banned member" + member.mention)
         else:
             await ctx.author.send("Your role isn't high enough to ban this member!")
 
@@ -27,18 +27,20 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("Your role isn't high enough to ban this member!")
     
-    @commands.hybrid_command()
+    @commands.hybrid_command(aliases=["unban"])
     @commands.has_permissions(ban_members = True)
-    async def pardon(self, ctx,*, member: discord.User):
-        """Unban a user."""
-        if member == None:
+    async def pardon(self, ctx,*, member: str):
+        """Unban a user. Doesn't support discriminators as of now, unban those manually."""
+        converter = commands.UserConverter()
+        users: discord.User = await converter.convert(ctx=ctx, argument=member)
+        if users == None:
             embed = discord.Embed(f"{ctx.message.author}, Please enter a valid member!")
             await ctx.reply(embed=embed)
 
         else:
             guild = ctx.guild
-            await ctx.send(f"Successfully unbanned **{member}**")
-            await guild.unban(user=member)
+            await ctx.send(f"Successfully unbanned **{users}**")
+            await guild.unban(user=users)
         
     @commands.hybrid_command(usage="Joe, timeout <member> <duration in hours with h behind> <duration in minutes with m behind>", aliases=["mute"])
     @commands.has_permissions(kick_members=True)

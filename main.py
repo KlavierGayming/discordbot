@@ -19,7 +19,7 @@ nest_asyncio.apply()
 tokenjson = {}
 with open("token.json") as token:
     tokenjson = json.loads(token.read())
-bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="Joe mama.", help_command=ch.HelpCommand(), tree_cls=app_commands.tree.CommandTree)
+bot = commands.Bot(command_prefix=tokenjson["prefix"], case_insensitive=True, intents=intents, description="A random bot", help_command=ch.HelpCommand(), tree_cls=app_commands.tree.CommandTree)
 bot.activity = discord.Game(name=tokenjson["playing_status"])
 
 
@@ -41,7 +41,9 @@ async def on_command_error(ctx, error):
     elif isinstance(error, commands.MissingPermissions):
         await ctx.send("You're missing permissions to run this command.")
     else:
+        await ctx.send("Internal error. Please report to bot developer @klavg.")
         print(error)
+
 
 token = tokenjson["token"]
 async def load():
