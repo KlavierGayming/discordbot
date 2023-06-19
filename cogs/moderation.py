@@ -32,17 +32,20 @@ class Moderation(commands.Cog):
     async def pardon(self, ctx,*, member: str):
         """Unban a user. Doesn't support discriminators as of now, unban those manually."""
         converter = commands.UserConverter()
-        users: discord.User = await converter.convert(ctx=ctx, argument=member)
+        try:
+            users: discord.User = await converter.convert(ctx=ctx, argument=member)
+        except:
+            users: discord.User = None
+
         if users == None:
-            embed = discord.Embed(f"{ctx.message.author}, Please enter a valid member!")
-            await ctx.reply(embed=embed)
+            await ctx.reply("Please enter a valid member!")
 
         else:
             guild = ctx.guild
-            await ctx.send(f"Successfully unbanned **{users}**")
+            await ctx.reply(f"Successfully unbanned **{users}**")
             await guild.unban(user=users)
         
-    @commands.hybrid_command(usage="Joe, timeout <member> <duration in hours with h behind> <duration in minutes with m behind>", aliases=["mute"])
+    @commands.hybrid_command(usage="timeout <member> <duration in hours with h behind> <duration in minutes with m behind>", aliases=["mute"])
     @commands.has_permissions(kick_members=True)
     async def timeout(self, ctx, member:discord.Member, durationh, durationm):
         """Time out a user."""
