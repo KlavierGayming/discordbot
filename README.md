@@ -1,3 +1,4 @@
+# EXPERIMENTAL BRANCH, REWRITING youtubestuff.py WITH LAVALINK!
 # "Simple" multi-functional discord bot with slash commands
 - Contains music, moderation and fun features.
 - Slightly configurable without editing the main python file
